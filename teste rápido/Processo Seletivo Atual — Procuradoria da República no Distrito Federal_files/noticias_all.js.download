@@ -1,0 +1,55 @@
+$(document).ready( function() {
+
+  function noticias_json (){
+    /* Configura a requisição AJAX */
+    $.ajax({
+      url : 'json_noticias', /* URL que será chamada */ 
+      type : 'POST', /* Tipo da requisição */ 
+      data: 'tema=' + $('#por-classificacao').val() + '&uf=' + $('#por-estado').val(), /* dado que será enviado via POST */
+      dataType: 'json', /* Tipo de transmissão */
+      success: function(data){
+        var noticias = data['Noticias']
+        $('#page01').empty();
+        $('#page02').empty();
+        $('#page03').empty();
+        $.each(noticias, function(i, item) {
+          if(i<3){
+            var conteudo = '<div class="destaque-3-noticia"><article><div class="categoria font-descricao">' + noticias[i].tema
+            if (noticias[i].imgVerify == 'img') {
+              conteudo = conteudo + '<a href="' + noticias[i].link + '">' + '<img height="109" width="150" alt="" src="' +  noticias[i].imagem +'"/></a>'
+            }
+            $('#page01').append(
+              conteudo + '<a href="' + noticias[i].link + '">'
+              + '<h3>' + noticias[i].titulo + '</h3></a>'
+              + '</article></div>'
+            );
+          };
+          if(i>=3 && i<6){
+            var conteudo = '<div class="destaque-3-noticia"><article><div class="categoria font-descricao">' + noticias[i].tema
+            if (noticias[i].imgVerify == 'img') {
+              conteudo = conteudo + '<a href="' + noticias[i].link + '">' + '<img height="109" width="150" alt="" src="' +  noticias[i].imagem +'"/></a>'
+            }
+            $('#page02').append(
+              conteudo + '<a href="' + noticias[i].link + '">'
+              + '<h3>' + noticias[i].titulo + '</h3></a>'
+              + '</article></div>'
+            );
+          };
+          if(i>=6 && i<9){
+            var conteudo = '<div class="destaque-3-noticia"><article><div class="categoria font-descricao">' + noticias[i].tema
+            if (noticias[i].imgVerify == 'img') {
+              conteudo = conteudo + '<a href="' + noticias[i].link + '">' + '<img height="109" width="150" alt="" src="' +  noticias[i].imagem +'"/></a>'
+            }
+            $('#page03').append(
+              conteudo + '<a href="' + noticias[i].link + '">'
+              + '<h3>' + noticias[i].titulo + '</h3></a>'
+              + '</article></div>'
+            );
+          };
+        })
+      }
+    }); 
+  }
+  $('#por-classificacao').change(noticias_json);
+  $('#por-estado').change(noticias_json);
+});
